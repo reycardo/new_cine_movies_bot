@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-py-cord = "*"
+py-cord = "==2.0.1"
 python-dotenv = "*"
 requests = "*"
 beautifulsoup4 = "*"
