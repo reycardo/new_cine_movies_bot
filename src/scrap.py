@@ -44,5 +44,3 @@ class Cine_Movies:
             if search_words in text:  
                 send_link.add(link.get('href'))
         return send_link
-
-cine = Cine_Movies()
