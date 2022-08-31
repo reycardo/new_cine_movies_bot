@@ -1,5 +1,6 @@
 import os
 import discord
+from discord import Embed
 from dotenv import load_dotenv
 from scrap import Cine_Movies
 
@@ -29,15 +30,19 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
     
+    if f'$cinema' in message_content:
+        cinema = ' '.join(message_content.split()[1:])
+        await message.channel.send(f'set cinema to: {cinema}')
+
     if f'$search' in message_content:
         key_words, search_words = cine.key_words_search_words(message_content)
-        result_links = cine.search_film(key_words)
-        links = cine.send_link(result_links, search_words)
-
-    if len(links) > 0:
-        for link in links:
-            await message.channel.send(link)
-    else:
-        await message.channel.send('rip')
+        dates_hours,image = cine.search_film(key_words,cine='vasco da gama')                    
+        embed = Embed()
+        fields = [(f"**{key}**", f"{value}", False) for key, value in dates_hours.items()]
+        for name, value, inline in fields:
+            embed.add_field(name=name, value=value, inline=inline)
+            embed.set_author(name=f"{search_words}")
+            embed.set_thumbnail(url=f"{image}")
+        await message.channel.send(embed=embed)
 
 bot.run(TOKEN)
