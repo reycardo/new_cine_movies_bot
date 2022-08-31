@@ -35,13 +35,14 @@ async def on_message(message):
         await message.channel.send(f'set cinema to: {cinema}')
 
     if f'$search' in message_content:
+        cinema = 'vasco da gama'
         key_words, search_words = cine.key_words_search_words(message_content)
-        dates_hours,image = cine.search_film(key_words,cine='vasco da gama')                    
+        dates_hours,image = cine.search_film(key_words,cine=cinema)
         embed = Embed()
         fields = [(f"**{key}**", f"{value}", False) for key, value in dates_hours.items()]
         for name, value, inline in fields:
             embed.add_field(name=name, value=value, inline=inline)
-            embed.set_author(name=f"{search_words}")
+            embed.set_author(name=f"{search_words} @ {cinema.title()}")
             embed.set_thumbnail(url=f"{image}")
         await message.channel.send(embed=embed)
 
