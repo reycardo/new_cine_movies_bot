@@ -38,7 +38,7 @@ async def on_message(message):
     if message.content.startswith('$search'):    
         cinema = 'vasco da gama'
         key_words, search_words = scraper.key_words_search_words(message.content)
-        dates_hours,image = scraper.search_film(key_words,cine=cinema)
+        dates_hours,image = scraper.search_movie(key_words,cine=cinema)
         embed = Embed()
         fields = [(f"**{key}**", f"{value}", False) for key, value in dates_hours.items()]
         for name, value, inline in fields:
